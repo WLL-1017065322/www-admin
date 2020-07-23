@@ -6,8 +6,10 @@ import {
   Icon,
   Timeline,
   Menu,
-  BackTop
-} from 'ant-design-cue'
+  BackTop,
+  Layout,
+  Breadcrumb
+} from 'ant-design-vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -21,9 +23,9 @@ Vue.component(Icon.name, Icon)
 Vue.use(Timeline)
 Vue.use(Menu)
 Vue.use(BackTop)
-
+Vue.use(Layout)
+Vue.use(Breadcrumb)
 Vue.config.productionTip = false
-
 new Vue({
   router,
   store,

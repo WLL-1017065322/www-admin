@@ -1,36 +1,81 @@
 <template>
   <a-layout id="components-layout-demo-side" style="min-height: 100vh">
     <a-layout-sider v-model="collapsed" collapsible>
-      <div class="logo" />
+      <!-- logo -->
+      <div class="logo" style="color:#fff">along</div>
       <a-menu theme="dark" :default-selected-keys="['1']" mode="inline">
-        <a-menu-item key="1">
-          <a-icon type="pie-chart" />
-          <span>Option 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <a-icon type="desktop" />
-          <span>Option 2</span>
-        </a-menu-item>
-        <a-sub-menu key="sub1">
+        <a-sub-menu v-for="items  in $router.options.routes[0].children" :key="items.name">
+          <span slot="title">
+            <a-icon type="file-text" />
+            <span>{{items.meta.title}}</span>
+          </span>
+          <a-menu-item
+            v-for=" item in items.children"
+            :key="item.name"
+            @click="linkTo(item.path)"
+          >{{item.meta.title}}</a-menu-item>
+        </a-sub-menu>
+        <!--  -->
+        <!-- 内容管理 -->
+        <a-sub-menu key="content">
+          <span slot="title">
+            <a-icon type="file-text" />
+            <span>内容管理</span>
+          </span>
+          <a-menu-item key="tools">在线工具</a-menu-item>
+          <a-menu-item key="demos">个人作品</a-menu-item>
+          <a-menu-item key="components">封装组件</a-menu-item>
+          <a-menu-item key="hotevents">热门事件</a-menu-item>
+          <a-menu-item key="grasses">百草</a-menu-item>
+          <a-menu-item key="chong">百虫</a-menu-item>
+        </a-sub-menu>
+        <!-- 网站管理 -->
+        <a-sub-menu key="webManage">
+          <span slot="title">
+            <a-icon type="code" />
+            <span>网站管理</span>
+          </span>
+          <a-menu-item key="slideshow">轮播</a-menu-item>
+          <a-menu-item key="notice">公告</a-menu-item>
+          <a-menu-item key="blogrolls">友情链接</a-menu-item>
+          <a-menu-item key="tagClouds">标签</a-menu-item>
+          <a-menu-item key="websiteMessage">网站信息</a-menu-item>
+          <a-menu-item key="loves">猜你喜欢</a-menu-item>
+        </a-sub-menu>
+        <!-- 用户管理 -->
+        <a-sub-menu key="crm">
           <span slot="title">
             <a-icon type="user" />
-            <span>User</span>
+            <span>用户管理</span>
           </span>
-          <a-menu-item key="3">Tom</a-menu-item>
-          <a-menu-item key="4">Bill</a-menu-item>
-          <a-menu-item key="5">Alex</a-menu-item>
+          <a-menu-item key="personage">个人</a-menu-item>
+          <a-menu-item key="otherUsers">其他用户</a-menu-item>
         </a-sub-menu>
-        <a-sub-menu key="sub2">
+        <!-- 日志系统 -->
+        <a-sub-menu key="logs">
           <span slot="title">
-            <a-icon type="team" />
-            <span>Team</span>
+            <a-icon type="fund" />
+            <span>日志系统</span>
           </span>
-          <a-menu-item key="6">Team 1</a-menu-item>
-          <a-menu-item key="8">Team 2</a-menu-item>
+          <a-menu-item key="log1">日志系统</a-menu-item>
         </a-sub-menu>
-        <a-menu-item key="9">
+        <!-- 备份 -->
+        <a-menu-item key="backup">
           <a-icon type="file" />
-          <span>File</span>
+          <span>一键备份</span>
+        </a-menu-item>
+        <!-- 其他 -->
+        <a-sub-menu key="others">
+          <span slot="title">
+            <a-icon type="more" />
+            <span>其他</span>
+          </span>
+          <a-menu-item key="other">其他</a-menu-item>
+        </a-sub-menu>
+        <!-- 退出 -->
+        <a-menu-item key="logout">
+          <a-icon type="logout" />
+          <span>退出</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -41,7 +86,9 @@
           <a-breadcrumb-item>User</a-breadcrumb-item>
           <a-breadcrumb-item>Bill</a-breadcrumb-item>
         </a-breadcrumb>
-        <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">Bill is a cat.</div>
+        <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+          <router-view></router-view>
+        </div>
       </a-layout-content>
       <a-layout-footer style="text-align: center">Ant Design ©2018 Created by Ant UED</a-layout-footer>
     </a-layout>
@@ -51,10 +98,25 @@
 export default {
   data () {
     return {
-      collapsed: false,
+      collapsed: false
     }
   },
-};
+  methods: {
+    route: function () {
+      console.log(this.$router)
+      console.log(this.$route)
+    },
+    linkTo (path) {
+      console.log('path', path)
+      if (this.$route.path !== path) {
+        this.$router.push(path)
+      }
+    }
+  },
+  mounted () {
+    this.route()
+  }
+}
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 module.exports = {
   presets: ['@vue/cli-plugin-babel/preset'],
-  pulgin: [
+  plugins: [
     [
       'import',
       {
