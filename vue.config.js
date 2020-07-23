@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     progress: false
   }
-}
+};
 
 // vue.config.js
 // ...
