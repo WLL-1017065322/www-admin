@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-// const Home = () => import('../views/Home.vue')
+// import Home from '../views/Home.vue'
+const Home = () => import('../views/Home.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -12,22 +12,27 @@ const routes = [
   {
     path: '/content',
     name: 'Content',
-    component: Content
-  },
-  {
-    path: '/',
-    name: 'Home',
     component: Home
   },
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/webManage',
+    name: 'WebManage',
+    component: WebManage
   },
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/crm',
+    name: 'Crm',
+    component: Crm
+  },
+  {
+    path: '/logs',
+    name: 'Logs',
+    component: Logs
+  },
+  {
+    path: '/others',
+    name: 'Others',
+    component: Others
   }
 ]
 
