@@ -3,7 +3,13 @@
     <a-layout-sider v-model="collapsed" collapsible>
       <!-- logo -->
       <div class="logo" style="color:#fff">along</div>
-      <a-menu theme="dark" :default-selected-keys="['1']" mode="inline">
+      <a-menu
+        theme="dark"
+        :default-selected-keys="['1']"
+        mode="inline"
+        @openChange="onOpenChange"
+        :open-keys="openKeys"
+      >
         <a-sub-menu v-for="items  in $router.options.routes[0].children" :key="items.name">
           <span slot="title">
             <a-icon type="file-text" />
@@ -15,9 +21,15 @@
             @click="linkTo(item.path)"
           >{{item.meta.title}}</a-menu-item>
         </a-sub-menu>
+        <!-- 备份 -->
+        <a-menu-item key="Backup" @click="backup">备份</a-menu-item>
+        <!-- 退出 -->
+        <a-menu-item key="Logout" @click="logout">退出</a-menu-item>
+
+        <!-- --------------------------------------- -->
         <!--  -->
         <!-- 内容管理 -->
-        <a-sub-menu key="content">
+        <!-- <a-sub-menu key="content">
           <span slot="title">
             <a-icon type="file-text" />
             <span>内容管理</span>
@@ -28,9 +40,9 @@
           <a-menu-item key="hotevents">热门事件</a-menu-item>
           <a-menu-item key="grasses">百草</a-menu-item>
           <a-menu-item key="chong">百虫</a-menu-item>
-        </a-sub-menu>
+        </a-sub-menu>-->
         <!-- 网站管理 -->
-        <a-sub-menu key="webManage">
+        <!-- <a-sub-menu key="webManage">
           <span slot="title">
             <a-icon type="code" />
             <span>网站管理</span>
@@ -41,42 +53,42 @@
           <a-menu-item key="tagClouds">标签</a-menu-item>
           <a-menu-item key="websiteMessage">网站信息</a-menu-item>
           <a-menu-item key="loves">猜你喜欢</a-menu-item>
-        </a-sub-menu>
+        </a-sub-menu>-->
         <!-- 用户管理 -->
-        <a-sub-menu key="crm">
+        <!-- <a-sub-menu key="crm">
           <span slot="title">
             <a-icon type="user" />
             <span>用户管理</span>
           </span>
           <a-menu-item key="personage">个人</a-menu-item>
           <a-menu-item key="otherUsers">其他用户</a-menu-item>
-        </a-sub-menu>
+        </a-sub-menu>-->
         <!-- 日志系统 -->
-        <a-sub-menu key="logs">
+        <!-- <a-sub-menu key="logs">
           <span slot="title">
             <a-icon type="fund" />
             <span>日志系统</span>
           </span>
           <a-menu-item key="log1">日志系统</a-menu-item>
-        </a-sub-menu>
+        </a-sub-menu>-->
         <!-- 备份 -->
-        <a-menu-item key="backup">
+        <!-- <a-menu-item key="backup">
           <a-icon type="file" />
           <span>一键备份</span>
-        </a-menu-item>
+        </a-menu-item>-->
         <!-- 其他 -->
-        <a-sub-menu key="others">
+        <!-- <a-sub-menu key="others">
           <span slot="title">
             <a-icon type="more" />
             <span>其他</span>
           </span>
           <a-menu-item key="other">其他</a-menu-item>
-        </a-sub-menu>
+        </a-sub-menu>-->
         <!-- 退出 -->
-        <a-menu-item key="logout">
+        <!-- <a-menu-item key="logout">
           <a-icon type="logout" />
           <span>退出</span>
-        </a-menu-item>
+        </a-menu-item>-->
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -98,7 +110,9 @@
 export default {
   data () {
     return {
-      collapsed: false
+      collapsed: false,
+      openKeys: [],
+      rootSubmenuKeys: []
     }
   },
   methods: {
@@ -111,7 +125,33 @@ export default {
       if (this.$route.path !== path) {
         this.$router.push(path)
       }
+    },
+    backup () {
+      console.log('备份')
+    },
+    logout () {
+      console.log('退出')
+    },
+    rootSubmenuKeysFunc () {
+      const routeArr = this.$router.options.routes[0].children
+      for (let i = 0; i < routeArr.length; i++) {
+        this.rootSubmenuKeys.push(routeArr[i].name)
+      }
+    },
+    // 只展开当前父级菜单
+    onOpenChange (openKeys) {
+      let latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1)
+      if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        this.openKeys = openKeys
+      } else {
+        this.openKeys = latestOpenKey ? [latestOpenKey] : []
+      }
     }
+  },
+  computed: {
+  },
+  created () {
+    this.rootSubmenuKeysFunc()
   },
   mounted () {
     this.route()

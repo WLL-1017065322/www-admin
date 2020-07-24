@@ -32,6 +32,7 @@ const routes = [
     // redirect: '/content',
     component: Home,
     children: [
+      // 内容管理
       {
         path: '/content',
         name: 'Content',
@@ -76,6 +77,7 @@ const routes = [
           }
         ]
       },
+      //  网站管理
       {
         path: '/webManage',
         name: 'WebManage',
@@ -120,6 +122,7 @@ const routes = [
           }
         ]
       },
+      // 用户管理
       {
         path: '/crm',
         name: 'Crm',
@@ -140,12 +143,22 @@ const routes = [
           }
         ]
       },
+      // 日志系统
       {
         path: '/logs',
         name: 'Logs',
         component: Logs,
-        meta: { title: '日志系统' }
+        meta: { title: '日志系统' },
+        children: [
+          {
+            path: '/logs/log',
+            name: 'Log',
+            component: Logs,
+            meta: { title: '日志' }
+          }
+        ]
       },
+      // 其他
       {
         path: '/others',
         name: 'Others',
@@ -160,6 +173,18 @@ const routes = [
           }
         ]
       }
+      // 备份
+      // {
+      //   path: '/backup',
+      //   name: 'Backup',
+      //   meta: { title: '备份' }
+      // },
+      // // 退出
+      // {
+      //   path: '/logout',
+      //   name: 'Logout',
+      //   meta: { title: '退出' }
+      // }
     ]
   }
 ]
