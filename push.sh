@@ -8,7 +8,7 @@
 
 if [ $# -eq 0 ]
 then
-    pushmessage=`date +%Y-%m-%d`
+    pushmessage=`date +%Y-%m-%d-%H:%M:%S`
 else
     pushmessage="$*"
 fi
