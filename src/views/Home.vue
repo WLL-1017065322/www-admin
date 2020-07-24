@@ -10,9 +10,9 @@
         @openChange="onOpenChange"
         :open-keys="openKeys"
       >
-        <a-sub-menu v-for="items  in $router.options.routes[0].children" :key="items.name">
+        <a-sub-menu v-for="items  in $router.options.routes.slice(1)" :key="items.name">
           <span slot="title">
-            <a-icon type="file-text" />
+            <a-icon :type="items.meta.icon" />
             <span>{{items.meta.title}}</span>
           </span>
           <a-menu-item
@@ -22,9 +22,15 @@
           >{{item.meta.title}}</a-menu-item>
         </a-sub-menu>
         <!-- 备份 -->
-        <a-menu-item key="Backup" @click="backup">备份</a-menu-item>
+        <a-menu-item key="Backup" @click="backup">
+          <a-icon type="file" />
+          <span>备份</span>
+        </a-menu-item>
         <!-- 退出 -->
-        <a-menu-item key="Logout" @click="logout">退出</a-menu-item>
+        <a-menu-item key="Logout" @click="logout">
+          <a-icon type="logout" />
+          <span>退出</span>
+        </a-menu-item>
 
         <!-- --------------------------------------- -->
         <!--  -->
@@ -133,7 +139,7 @@ export default {
       console.log('退出')
     },
     rootSubmenuKeysFunc () {
-      const routeArr = this.$router.options.routes[0].children
+      const routeArr = this.$router.options.routes
       for (let i = 0; i < routeArr.length; i++) {
         this.rootSubmenuKeys.push(routeArr[i].name)
       }
