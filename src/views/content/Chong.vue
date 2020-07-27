@@ -37,6 +37,9 @@
       </a-form>
     </a-modal>
     <a-table :columns="columns" :data-source="data" @change="onChange">
+      <span slot="pic" slot-scope="text, record">
+        <img style="width:50px;heigth:50px" :src="record.image" />
+      </span>
       <template slot="operation">
         <!-- <a-popconfirm
         v-if="dataSource.length"
