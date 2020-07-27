@@ -23,7 +23,6 @@ const OtherUsers = () => import('../views/crm/OtherUsers.vue')
 const Logs = () => import('../views/logs/Logs.vue')
 //
 const Others = () => import('../views/others/Others.vue')
-
 Vue.use(VueRouter)
 const routes = [
   {

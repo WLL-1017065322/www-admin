@@ -4,13 +4,13 @@
       <!-- logo -->
       <div class="logo" style="color:#fff">along</div>
       <a-menu
+        :open-keys="openKeys"
         theme="dark"
         :default-selected-keys="['1']"
         mode="inline"
         @openChange="onOpenChange"
-        :open-keys="openKeys"
       >
-        <a-sub-menu v-for="items  in $router.options.routes.slice(1)" :key="items.name">
+        <a-sub-menu v-for="items in $router.options.routes.slice(1)" :key="items.name">
           <span slot="title">
             <a-icon :type="items.meta.icon" />
             <span>{{items.meta.title}}</span>
@@ -98,11 +98,13 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style="background: #fff; padding: 0" />
+      <!-- <a-layout-header style="background: #fff; padding: 0" /> -->
       <a-layout-content style="margin: 0 16px">
         <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>User</a-breadcrumb-item>
-          <a-breadcrumb-item>Bill</a-breadcrumb-item>
+          <a-breadcrumb-item
+            v-for="(item,index) in $route.path.split('/').splice(1)"
+            :key="index"
+          >{{item}}</a-breadcrumb-item>
         </a-breadcrumb>
         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
           <router-view></router-view>
@@ -114,7 +116,7 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       collapsed: false,
       openKeys: [],
@@ -126,27 +128,27 @@ export default {
       console.log(this.$router)
       console.log(this.$route)
     },
-    linkTo (path) {
+    linkTo(path) {
       console.log('path', path)
       if (this.$route.path !== path) {
         this.$router.push(path)
       }
     },
-    backup () {
+    backup() {
       console.log('备份')
     },
-    logout () {
+    logout() {
       console.log('退出')
     },
-    rootSubmenuKeysFunc () {
+    rootSubmenuKeysFunc() {
       const routeArr = this.$router.options.routes
       for (let i = 0; i < routeArr.length; i++) {
         this.rootSubmenuKeys.push(routeArr[i].name)
       }
     },
     // 只展开当前父级菜单
-    onOpenChange (openKeys) {
-      let latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1)
+    onOpenChange(openKeys) {
+      let latestOpenKey = openKeys.find((key) => this.openKeys.indexOf(key) === -1)
       if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
         this.openKeys = openKeys
       } else {
@@ -154,12 +156,11 @@ export default {
       }
     }
   },
-  computed: {
-  },
-  created () {
+  computed: {},
+  created() {
     this.rootSubmenuKeysFunc()
   },
-  mounted () {
+  mounted() {
     this.route()
   }
 }
