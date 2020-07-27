@@ -8,7 +8,12 @@ import {
   Menu,
   BackTop,
   Layout,
-  Breadcrumb
+  Breadcrumb,
+  Table,
+  Divider,
+  Modal,
+  Form,
+  DatePicker
 } from 'ant-design-vue'
 import App from './App.vue'
 import router from './router'
@@ -16,7 +21,6 @@ import store from './store'
 import axios from 'axios'
 Vue.prototype.$axios = axios
 Vue.component(Button.name, Button)
-Vue.component(Input.Search.name, Input.Search)
 Vue.component(Carousel.name, Carousel)
 Vue.component(Icon.name, Icon)
 // Vue.component(Timeline.name, Timeline)
@@ -25,6 +29,13 @@ Vue.use(Menu)
 Vue.use(BackTop)
 Vue.use(Layout)
 Vue.use(Breadcrumb)
+Vue.use(Table)
+Vue.use(Divider)
+Vue.use(Modal)
+Vue.use(Form)
+Vue.use(Input)
+Vue.use(DatePicker)
+
 Vue.config.productionTip = false
 new Vue({
   router,
