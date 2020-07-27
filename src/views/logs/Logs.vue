@@ -4,17 +4,12 @@
 
 <script>
 export default {
-  data () {
-    return {
-
-    }
+  data() {
+    return {}
   },
-  components: {
-
-  }
+  components: {}
 }
 </script>
 
 <style scoped lang="less">
 </style>
-
